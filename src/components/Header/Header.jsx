@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Header = () => {
   const items = [
@@ -42,7 +42,7 @@ const Header = () => {
       </div>
       <div className="navbar-end gap-5">
         <a className="btn btn-active btn-success">Sign In</a>
-        <a className="btn btn-active btn-info">Sign Up</a>
+        <Link to='/signUp' className="btn btn-active btn-info">Sign Up</Link>
       </div>
     </div>
   );
