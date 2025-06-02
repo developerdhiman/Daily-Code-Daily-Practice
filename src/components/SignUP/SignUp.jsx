@@ -1,8 +1,12 @@
 
 const SignUp = () => {
+    const handleGoogleSignUp = () => {
+        console.log('I am okay.');
+    }
+
     return (
         <div>
-            <h2>This is Sign up pages</h2>
+            <button onClick={handleGoogleSignUp} className="my-6 btn">Login With Google</button>
         </div>
     );
 };
