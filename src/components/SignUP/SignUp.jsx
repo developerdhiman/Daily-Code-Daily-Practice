@@ -1,14 +1,12 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../../firebase/firebase.init";
-import { useState } from "react";
 
 const SignUp = () => {
   const provider = new GoogleAuthProvider();
-  const [userData, setUserdata] = useState(null);
 
   const handleGoogleSignUp = () => {
     signInWithPopup(auth, provider)
-      .then((results) => setUserdata(results))
+      .then((results) => console.log(results))
       .catch((error) => console.log(error));
   };
 
