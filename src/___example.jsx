@@ -1,6 +1,5 @@
 
 const ___example = () => {
-    
     return (
         <div>
             
