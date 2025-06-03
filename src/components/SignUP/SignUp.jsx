@@ -1,13 +1,25 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import SignUpGoogle from "./SignUpGoogle/SignUpGoogle";
 import auth from "../../firebase/firebase.init";
+import { useState } from "react";
 
 const SignUp = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    const email = e.target.email.valu;
+    const password = e.target.password.value;
+    console.log(email, password);
+
     createUserWithEmailAndPassword(auth, email, password)
-    .then(results => console.log(results))
-    .catch(error => console.log(error))
+    .then(results => setData(results))
+    .catch(error => setError(error));
+
+
+    console.log(error);
 
   };
 
