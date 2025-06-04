@@ -1,10 +1,11 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import auth from "../../firebase/firebase.init";
 import { useState } from "react";
 
 const SignIn = () => {
-  const [user, setUser] = useState(null); // null করা হলো
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [showForgotPasswordEmailInput, setShowForgotPasswordEmailInput] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
   const handleLogIn = (e) => {
     e.preventDefault();
@@ -12,19 +13,35 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     // Clear previous data
-    setUser(null);
-    setError("");
+    setMessage("");
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setUser(user);
+        setMessage(`Login SuccessFully: ${user.email}`);
         console.log("Login SuccessFully", user);
       })
       .catch((error) => {
-        setError(error.message);
+        setMessage(`Login Failed: ${error.message}`);
         console.error("Login Failed", error.message);
       });
+  };
+
+  const handleForgotPassword = async () => {
+    if (!forgotPasswordEmail) {
+      setMessage("Please enter your email address.");
+      return;
+    }
+    setMessage("");
+    try {
+      await sendPasswordResetEmail(auth, forgotPasswordEmail);
+      setMessage("Password reset email sent. Check your inbox.");
+      setShowForgotPasswordEmailInput(false); // Hide input after sending
+      setForgotPasswordEmail(""); // Clear the input
+    } catch (error) {
+      setMessage(`Error sending password reset email: ${error.message}`);
+      console.error("Forgot Password Failed", error.message);
+    }
   };
 
   return (
@@ -58,23 +75,60 @@ const SignIn = () => {
                 required
               />
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <a
+                  href="#"
+                  className="link link-hover"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowForgotPasswordEmailInput(true);
+                    setMessage("");
+                  }}
+                >
+                  Forgot password?
+                </a>
               </div>
 
-              {/* Success Message */}
-              {user && (
-                <h2 className="text-green-500 mt-2">
-                  Login SuccessFully: {user.email}
-                </h2>
+              {/* Message Display */}
+              {message && (
+                <p className={`mt-2 ${message.startsWith("Error") || message.startsWith("Login Failed") ? "text-red-500" : "text-green-500"}`}>
+                  {message}
+                </p>
               )}
 
-              {/* Error Message */}
-              {error && (
-                <p className="text-red-500 mt-2">Login Failed: {error}</p>
-              )}
-
-              <button className="btn btn-neutral mt-4">Login</button>
+              <button type="submit" className="btn btn-neutral mt-4">Login</button>
             </form>
+
+            {/* Forgot Password Form */}
+            {showForgotPasswordEmailInput && (
+              <div className="mt-4">
+                <label className="label">Email for Password Reset</label>
+                <input
+                  type="email"
+                  name="forgotPasswordEmail"
+                  className="input"
+                  placeholder="Enter your email"
+                  value={forgotPasswordEmail}
+                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                  required
+                />
+                <button
+                  onClick={handleForgotPassword}
+                  className="btn btn-neutral mt-2 w-full"
+                >
+                  Send Reset Email
+                </button>
+                <button
+                  onClick={() => {
+                    setShowForgotPasswordEmailInput(false);
+                    setMessage("");
+                    setForgotPasswordEmail("");
+                  }}
+                  className="btn btn-ghost mt-2 w-full"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
