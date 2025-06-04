@@ -2,12 +2,17 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import SignUpGoogle from "./SignUpGoogle/SignUpGoogle";
 import auth from "../../firebase/firebase.init";
 import { useState } from "react"; // It's good practice to keep useState if you plan to use it later for messages/errors
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
   // You might want to use state to display messages or errors to the user
   const [signUpMessage, setSignUpMessage] = useState("");
   const [signUpError, setSignUpError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -21,13 +26,13 @@ const SignUp = () => {
     setSignUpError("");
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
+      .then((userCredential) => {
         const user = userCredential.user;
         console.log("Sign-up successful! User:", user);
         setSignUpMessage("Sign-up successful! Welcome, " + user.email);
         // You might want to redirect the user or update UI here
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMessage = error.message;
         console.error("Sign-up error:", errorMessage);
         setSignUpError("Sign-up failed: " + errorMessage);
@@ -43,23 +48,37 @@ const SignUp = () => {
             <div className="card-body">
               <fieldset className="fieldset">
                 <label className="label">Email</label>
-                <input type="email" name="email" className="input" placeholder="Email" required/>
-                <label className="label">Password</label>
                 <input
-                  type="password"
-                  name="password"
+                  type="email"
+                  name="email"
                   className="input"
-                  placeholder="Password"
+                  placeholder="Email"
                   required
                 />
-                <button></button>
+                <label className="label">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    className="input"
+                    placeholder="Password"
+                    required
+                  />
+                  <button onClick={() => handleShowPassword} className="absolute bottom-4 right-2 ">
+                    { showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash> }
+                  </button>
+                </div>
                 <div>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
                 <button className="btn btn-neutral mt-4">Sign Up</button>
                 {/* Display messages to the user */}
-                {signUpMessage && <p className="text-green-500 mt-2">{signUpMessage}</p>}
-                {signUpError && <p className="text-red-500 mt-2">{signUpError}</p>}
+                {signUpMessage && (
+                  <p className="text-green-500 mt-2">{signUpMessage}</p>
+                )}
+                {signUpError && (
+                  <p className="text-red-500 mt-2">{signUpError}</p>
+                )}
                 <hr className="border-t-2 border-white my-4" />
                 <SignUpGoogle></SignUpGoogle>
               </fieldset>

@@ -41,7 +41,7 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1 gap-10">{items}</ul>
       </div>
       <div className="navbar-end gap-5">
-        <a className="btn btn-active btn-success">Sign In</a>
+        <Link to='/signIn' className="btn btn-active btn-success">Sign In</Link>
         <Link to='/signUp' className="btn btn-active btn-info">Sign Up</Link>
       </div>
     </div>
