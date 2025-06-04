@@ -1,19 +1,32 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase/firebase.init";
+import { useState } from "react";
 
 const SignIn = () => {
-    const handleLogIn = e => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+  const [user, setUser] = useState(null); // null করা হলো
+  const [error, setError] = useState("");
 
-        //logIn
-        signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {const user = userCredential.user})
-        .catch(error => {const errorMessage = error.message})
-    }
+  const handleLogIn = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    
+    // Clear previous data
+    setUser(null);
+    setError("");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+        console.log("Login SuccessFully", user);
+      })
+      .catch((error) => {
+        setError(error.message);
+        console.error("Login Failed", error.message);
+      });
+  };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -27,14 +40,39 @@ const SignIn = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            <form onClick={handleLogIn} className="fieldset">
+            <form onSubmit={handleLogIn} className="fieldset">
               <label className="label">Email</label>
-              <input type="email" name="email" className="input" placeholder="Email" />
+              <input
+                type="email"
+                name="email"
+                className="input"
+                placeholder="Email"
+                required
+              />
               <label className="label">Password</label>
-              <input type="password" name="password" className="input" placeholder="Password" />
+              <input
+                type="password"
+                name="password"
+                className="input"
+                placeholder="Password"
+                required
+              />
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>
+
+              {/* Success Message */}
+              {user && (
+                <h2 className="text-green-500 mt-2">
+                  Login SuccessFully: {user.email}
+                </h2>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <p className="text-red-500 mt-2">Login Failed: {error}</p>
+              )}
+
               <button className="btn btn-neutral mt-4">Login</button>
             </form>
           </div>
