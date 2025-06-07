@@ -1,12 +1,12 @@
-
-import BookDetails from './components/BookDetails/BookDetails.jsx';
-import ErrorPage from './components/ErrorPage/ErrorPage.jsx';
-import Home from './components/Home/Home.jsx';
-import ListedBooks from './components/ListedBooks/ListedBooks.jsx';
-import Root from './components/Root/Root.jsx';
-import './index.css'
-import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import BookDetails from "./components/BookDetails/BookDetails.jsx";
+import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
+import Home from "./components/Home/Home.jsx";
+import ListedBooks from "./components/ListedBooks/ListedBooks.jsx";
+import Root from "./components/Root/Root.jsx";
+import "./index.css";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import AuthProvider from "./providers/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,21 +16,23 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        Component: Home
+        Component: Home,
       },
       {
         path: "/listedBooks",
-        Component: ListedBooks
+        Component: ListedBooks,
       },
       {
         path: `/book/:bookId`,
-        loader: () => fetch('booksData.json'),
-        Component: BookDetails
+        loader: () => fetch("booksData.json"),
+        Component: BookDetails,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
-createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}></RouterProvider>
+createRoot(document.getElementById("root")).render(
+  <AuthProvider>
+    <RouterProvider router={router}></RouterProvider>
+  </AuthProvider>
 );
