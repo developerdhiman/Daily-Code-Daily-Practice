@@ -7,6 +7,7 @@ import "./index.css";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthProvider from "./providers/AuthProvider.jsx";
+import SignUp from "./components/SignUP/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         loader: () => fetch("booksData.json"),
         Component: BookDetails,
       },
+      {
+        path: '/signup',
+        Component: SignUp
+      }
     ],
   },
 ]);
