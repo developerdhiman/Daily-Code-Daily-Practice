@@ -2,6 +2,10 @@ const SignUp = () => {
 
     const handleSignUp = e => {
         e.preventDefault();
+
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email, password);
     }
 
   return (
@@ -19,9 +23,9 @@ const SignUp = () => {
           <form onSubmit={handleSignUp} className="card-body">
             <fieldset className="fieldset">
               <label className="label">Email</label>
-              <input type="email" className="input" placeholder="Email" />
+              <input name="email" type="email" className="input" placeholder="Email" />
               <label className="label">Password</label>
-              <input type="password" className="input" placeholder="Password" />
+              <input name="password" type="password" className="input" placeholder="Password" />
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>
