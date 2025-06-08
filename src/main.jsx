@@ -29,15 +29,13 @@ const router = createBrowserRouter([
         Component: BookDetails,
       },
       {
-        path: '/signup',
-        Component: SignUp
-      }
+        path: "/signup",
+        Component: SignUp,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <AuthProvider>
-    <RouterProvider router={router}></RouterProvider>
-  </AuthProvider>
+  <RouterProvider router={router}></RouterProvider>
 );

@@ -1,25 +1,7 @@
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
+
 
 const SignUp = () => {
-    const {createUser} = useContext(AuthContext);
 
-    const handleSignUp = e => {
-        e.preventDefault();
-
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        console.log(email, password);
-
-        createUser(email, password)
-        .then(result  => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log("error", error);
-        });
-
-    }
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -33,7 +15,7 @@ const SignUp = () => {
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form onSubmit={handleSignUp} className="card-body">
+          <form className="card-body">
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input name="email" type="email" className="input" placeholder="Email" />
