@@ -3,7 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.init";
 
 export const AuthContext = createContext(null);
@@ -32,16 +32,11 @@ const AuthProvider = ({ children }) => {
   //context-value-end
 
   //observer-start
-  onAuthStateChanged(auth, currentUser => {
-    if(currentUser) {
-      console.log(currentUser);
-      setUser(currentUser)
-    }
-    else{
-      console.log(currentUser);
-      setUser(null);
-    }
-  })
+  useEffect(() => {
+    onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
+    })
+  }, [])
   //observer-end
 
   console.log(user);
