@@ -1,30 +1,29 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
-const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+const SignIn = () => {
+    const {logInUser} = useContext(AuthContext);
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
-    createUser(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    const handleSignIn = e => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        
+        logInUser(email, password)
+            .then(userCredential=> {
+      const user = userCredential.user;
+      console.log(user);
+    })
+    .catch(error => {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    })
   };
-
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Registration!</h1>
+          <h1 className="text-5xl font-bold">Log IN!</h1>
           <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
@@ -32,7 +31,7 @@ const SignUp = () => {
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form onSubmit={handleSignUp} className="card-body">
+          <form onSubmit={handleSignIn} className="card-body">
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input
@@ -60,4 +59,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

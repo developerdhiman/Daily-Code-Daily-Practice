@@ -8,6 +8,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import SignUp from "./components/SignUP/SignUp.jsx";
+import SignIn from "./components/SignIn/SignIn.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,10 +33,16 @@ const router = createBrowserRouter([
         path: "/signup",
         Component: SignUp,
       },
+      {
+        path: '/signin',
+        Component: SignIn
+      }
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router}></RouterProvider>
+  <AuthProvider>
+    <RouterProvider router={router}></RouterProvider>
+  </AuthProvider>
 );
