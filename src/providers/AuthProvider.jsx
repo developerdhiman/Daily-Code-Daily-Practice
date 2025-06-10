@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
       setUser(null);
     }
   })
-  //observer-start
+  //observer-end
 
   console.log(user);
   return (
