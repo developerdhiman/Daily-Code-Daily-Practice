@@ -3,18 +3,17 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Header = () => {
-  const {user, logOutUser} = useContext(AuthContext);
+  const { user, logOutUser } = useContext(AuthContext);
 
   const handleSignOut = () => {
     logOutUser()
-    .then(() => {
-      console.log('sign out successfully')
-    })
-    .catch(error => {
-      console.log(error.message);
-    }
-  )
-  }
+      .then(() => {
+        console.log("sign out successfully");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   const items = [
     <li>

@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import SignUp from "./components/SignUP/SignUp.jsx";
 import SignIn from "./components/SignIn/SignIn.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/signin',
         Component: SignIn
+      },
+      {
+        path: '/cart',
+        Component: Cart
       }
     ],
   },
