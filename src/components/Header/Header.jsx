@@ -3,7 +3,19 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Header = () => {
-  const {user} = useContext(AuthContext);
+  const {user, logOutUser} = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    logOutUser()
+    .then(() => {
+      console.log('sign out successfully')
+    })
+    .catch(error => {
+      console.log(error.message);
+    }
+  )
+  }
+
   const items = [
     <li>
       <NavLink to="/" className="btn btn-outline btn-success">
@@ -58,7 +70,7 @@ const Header = () => {
       <div className="navbar-end gap-5">
         {user ? (
           <>
-            {user} <button>Log out</button>
+            {user?.email} <button onClick={handleSignOut}>Log out</button>
           </>
         ) : (
           <>

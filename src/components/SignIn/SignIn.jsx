@@ -2,22 +2,22 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const SignIn = () => {
-    const {logInUser} = useContext(AuthContext);
+  const { logInUser } = useContext(AuthContext);
 
-    const handleSignIn = e => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        
-        logInUser(email, password)
-            .then(userCredential=> {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch(error => {
-      const errorMessage = error.message;
-      console.log(errorMessage);
-    })
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    logInUser(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
   return (
     <div className="hero bg-base-200 min-h-screen">
