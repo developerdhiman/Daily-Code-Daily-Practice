@@ -1,11 +1,26 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Header = () => {
+  const {user} = useContext(AuthContext);
   const items = [
-    <li><NavLink to="/" className="btn btn-outline btn-success">Home</NavLink></li>,
-    <li><NavLink to="/listedBooks" className="btn btn-outline btn-success">Listed Books</NavLink></li>,
-    <li><NavLink to="/pagesToRead" className="btn btn-outline btn-success">Pages to Read</NavLink></li>
-];
+    <li>
+      <NavLink to="/" className="btn btn-outline btn-success">
+        Home
+      </NavLink>
+    </li>,
+    <li>
+      <NavLink to="/listedBooks" className="btn btn-outline btn-success">
+        Listed Books
+      </NavLink>
+    </li>,
+    <li>
+      <NavLink to="/pagesToRead" className="btn btn-outline btn-success">
+        Pages to Read
+      </NavLink>
+    </li>,
+  ];
 
   return (
     <div className="navbar bg-base-100">
@@ -41,8 +56,20 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1 gap-10">{items}</ul>
       </div>
       <div className="navbar-end gap-5">
-        <Link to='/signIn' className="btn btn-active btn-success">Sign In</Link>
-        <Link to='/signUp' className="btn btn-active btn-info">Sign Up</Link>
+        {user ? (
+          <>
+            {user} <button>Log out</button>
+          </>
+        ) : (
+          <>
+            <Link to="/signIn" className="btn btn-active btn-success">
+              Sign In
+            </Link>
+            <Link to="/signUp" className="btn btn-active btn-info">
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
