@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { Link, NavLink } from "react-router";
+import { NavLink } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user, logOutUser } = useContext(AuthContext);
@@ -31,6 +32,14 @@ const Header = () => {
         Pages to Read
       </NavLink>
     </li>,
+
+    user && (
+      <li>
+        <NavLink to="/cart" className="btn btn-outline btn-success">
+          Cart
+        </NavLink>
+      </li>
+    ),
   ];
 
   return (
